@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme({
     palette: {
         background: {
-            default: '#328fa8', // Light grey background - you can change this to any color
+            default: '#328fa8',
         },
         primary: {
-            main: '#282c34', // This keeps your AppBar color the same
+            main: '#282c34',
         },
     },
 });

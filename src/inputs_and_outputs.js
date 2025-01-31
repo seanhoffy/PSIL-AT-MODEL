@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     Paper,
@@ -11,8 +11,48 @@ import {
     CardContent,
     InputAdornment
 } from '@mui/material';
+import { auth, db } from "./firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const InputsForm = () => {
+    const [model, setModel] = useState([]);
+    const [user] = useAuthState(auth);
+
+    useEffect(() => {
+        if (user?.uid) {
+            const getModel = async () => {
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        setModel(docSnap.data().model || []);
+                    }
+                } catch (error) {
+                    console.error("Error fetching model:", error);
+                }
+            };
+            getModel();
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (model.length > 0) {
+            updateModel();
+        }
+    }, [model]);
+
+    const updateModel = async () => {
+        if (!user?.uid) return;
+        try {
+            const docRef = doc(db, "users", user.uid);
+            await updateDoc(docRef, { model: model });
+            console.log("Model updated in Firestore:", model);
+        } catch (error) {
+            console.error("Error updating model:", error);
+        }
+    };
+
     const [formData, setFormData] = useState({
         MDD: 9028000,
         TRD_P: 30,
@@ -79,6 +119,8 @@ const InputsForm = () => {
                 TRD: comorbid_TRD.toFixed(0)
             }
         });
+
+        setModel([trial_MDD.toFixed(0), trial_TRD.toFixed(0), real_MDD.toFixed(0), real_TRD.toFixed(0), comorbid_MDD.toFixed(0), comorbid_TRD.toFixed(0)]);
     };
 
     // const textFieldStyle = {

@@ -81,12 +81,14 @@ function Register() {
                             sx={{ mb: 1 }}
                             onChange={(event) => setName(event.target.value)}
                             label="Full Name"
+                            value={name}
                             type={'text'}
                             id="filled-basic"
                         />
                         <TextField fullWidth
                             onChange={(event) => setEmail(event.target.value)}
                             label="Email"
+                            value={email}
                             type={'text'}
                             id="filled-basic"
                         /><br />
@@ -105,15 +107,16 @@ function Register() {
                                 onChange={(event) => setUserType(event.target.value)}
                                 label="User Type"
                             >
-                                <MenuItem value="option1">Researcher</MenuItem>
-                                <MenuItem value="option2">Payer</MenuItem>
-                                <MenuItem value="option3">Student</MenuItem>
+                                <MenuItem value="Researcher">Researcher</MenuItem>
+                                <MenuItem value="Payer">Payer</MenuItem>
+                                <MenuItem value="Student">Student</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField fullWidth
                             sx={{ mt: 1 }}
                             onChange={(event) => setEmployer(event.target.value)}
                             label="Employer"
+                            value={employer}
                             type={'text'}
                             id="filled-basic"
                         />
