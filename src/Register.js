@@ -1,0 +1,143 @@
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "./firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore";
+import { FormControl, MenuItem, InputLabel, Select, Box, Avatar, Button, Card, CardActions, CardContent, CardHeader, createTheme, Grid, TextField, ThemeProvider } from "@mui/material";
+import logo from './logo.svg';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#328fa8',
+        },
+        secondary: {
+            main: '#282c34',
+        },
+    },
+});
+
+function Register() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [user_type, setUserType] = useState("");
+    const [employer, setEmployer] = useState("");
+    const [user, loading] = useAuthState(auth);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loading) return;
+        if (user) navigate("/home");
+    }, [loading, user, navigate]);
+
+    const registerWithEmailAndPassword = async (name, email, password) => {
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredentials.user;
+            await setDoc(doc(db, "users", user.uid), { name: name, user_type: user_type, model: [], employer: employer });
+        } catch (error) {
+            alert("Invalid registration");
+        }
+    };
+
+    return (
+        <ThemeProvider theme={theme}>
+            <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justify="center"
+            >
+                <Card raised={true} sx={{ mt: 12, width: 324 }}>
+                    <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justify="center"
+                    >
+                        <CardHeader
+                            sx={{ mt: 3, marginBottom: -2 }}
+                            avatar={
+                                <Avatar sx={{ mr: -1, bgcolor: '#282c34' }}>
+                                    <Box component="img"
+                                        src={logo}
+                                        alt="logo"
+                                        sx={{
+                                            height: 60,
+                                            width: 60,
+                                        }}
+                                    />
+                                </Avatar>
+                            }
+                            titleTypographyProps={{ fontWeight: 'bold', color: 'primary', fontSize: 25, variant: 'h4', fontFamily: 'monospace' }}
+                            title="PSIL-AT Model"
+                            style={{ align: 'center' }}
+                        />
+                    </Grid>
+                    <CardContent sx={{ mt: 2, mx: 2 }}>
+                        <TextField fullWidth
+                            sx={{ mb: 1 }}
+                            onChange={(event) => setName(event.target.value)}
+                            label="Full Name"
+                            type={'text'}
+                            id="filled-basic"
+                        />
+                        <TextField fullWidth
+                            onChange={(event) => setEmail(event.target.value)}
+                            label="Email"
+                            type={'text'}
+                            id="filled-basic"
+                        /><br />
+                        <TextField fullWidth
+                            sx={{ mt: 1, mb: 1 }}
+                            onChange={(event) => setPassword(event.target.value)}
+                            label="Password"
+                            type={'password'}
+                            id="filled-basic"
+                        />
+                        <FormControl fullWidth>
+                            <InputLabel id="dropdown-label">User Type</InputLabel>
+                            <Select
+                                labelId="dropdown-label"
+                                value={user_type}
+                                onChange={(event) => setUserType(event.target.value)}
+                                label="User Type"
+                            >
+                                <MenuItem value="option1">Researcher</MenuItem>
+                                <MenuItem value="option2">Payer</MenuItem>
+                                <MenuItem value="option3">Student</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TextField fullWidth
+                            sx={{ mt: 1 }}
+                            onChange={(event) => setEmployer(event.target.value)}
+                            label="Employer"
+                            type={'text'}
+                            id="filled-basic"
+                        />
+                    </CardContent>
+                    <CardActions sx={{ ml: 3.5 }}>
+                        <Button
+                            variant="contained"
+                            onClick={() => registerWithEmailAndPassword(name, email, password)}
+                        >
+                            Create Account
+                        </Button>
+                        <Button
+                            sx={{ ml: 1 }}
+                            href="/"
+                            variant="outlined"
+                        >
+                            Login
+                        </Button>
+                    </CardActions>
+                    <br />
+                </Card>
+            </Grid>
+        </ThemeProvider>
+    );
+}
+
+export default Register;
