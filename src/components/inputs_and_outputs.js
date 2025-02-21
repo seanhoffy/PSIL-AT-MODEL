@@ -163,11 +163,15 @@ const InputsForm = () => {
                                     name="MDD"
                                     thousandSeparator=","
                                     value={formData.MDD}
+                                    //onChange={handleInputChange}
                                     onValueChange={(values) => {
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            MDD: values.value, // Store raw number
-                                        }));
+                                        const updatedMDD = values.value;
+                                        setFormData((prev) => {
+                                            const newData = { ...prev, MDD: updatedMDD };
+                                            // Auto-calculate TRD when MDD changes
+                                            newData.TRD = updatedMDD * (newData.TRD_P / 100);
+                                            return newData;
+                                        });
                                     }}
                                     variant="outlined"
                                 />

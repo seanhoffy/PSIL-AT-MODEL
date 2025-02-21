@@ -31,7 +31,7 @@ const LandingPage = () => {
             <Box
                 sx={{
                     height: "100vh",
-                    backgroundImage: "url(/images/heroimage.jpg)",
+                    backgroundImage: "url(/heroimage.jpg)",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundAttachment: "fixed",
