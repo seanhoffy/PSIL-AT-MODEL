@@ -1,9 +1,9 @@
 import { AppBar, Toolbar, Typography, Box, ThemeProvider, createTheme, CssBaseline, Button } from '@mui/material';
-import logo from './logo.svg';
-import './App.css';
-import InputsForm from './inputs_and_outputs';
+import logo from '../logo.svg';
+import '../App.css';
+import InputsForm from '../components/inputs_and_outputs';
 import { signOut } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from '../firebase';
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";

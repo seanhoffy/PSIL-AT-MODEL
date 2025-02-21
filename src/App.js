@@ -1,6 +1,7 @@
-import HomePage from "./HomePage";
-import LoginPage from "./LoginPage";
-import Register from "./Register";
+import HomePage from "./routes/HomePage";
+import LandingPage from "./routes/LandingPage";
+import LoginPage from "./routes/LoginPage";
+import Register from "./routes/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
@@ -8,7 +9,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
       </Routes>

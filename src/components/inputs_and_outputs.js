@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
+import { NumericFormat } from 'react-number-format';
 import {
     Container,
     Paper,
@@ -11,7 +12,7 @@ import {
     CardContent,
     InputAdornment
 } from '@mui/material';
-import { auth, db } from "./firebase";
+import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -155,13 +156,19 @@ const InputsForm = () => {
                         </Typography>
                         <Grid container spacing={3} alignItems="center">
                             <Grid item>
-                                <TextField
-                                    sx={{ width: "425px" }}  // Using sx instead of style for consistency
+                                <NumericFormat
+                                    customInput={TextField}
+                                    sx={{ width: "425px" }}
                                     label="Patients with MDD"
                                     name="MDD"
-                                    type="number"
+                                    thousandSeparator=","
                                     value={formData.MDD}
-                                    onChange={handleInputChange}
+                                    onValueChange={(values) => {
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            MDD: values.value, // Store raw number
+                                        }));
+                                    }}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -180,11 +187,12 @@ const InputsForm = () => {
                                 />
                             </Grid>
                             <Grid item>
-                                <TextField
-                                    sx={{ width: "425px" }}  // Larger width for calculated field
+                                <NumericFormat
+                                    customInput={TextField}
+                                    sx={{ width: "425px" }}
                                     label="Patients with TRD: 2+ Treatment Failures (Calculated with %)"
                                     name="TRD"
-                                    type="number"
+                                    thousandSeparator=","
                                     value={formData.TRD}
                                     disabled
                                     variant="outlined"
