@@ -20,7 +20,7 @@ const LandingPage = () => {
             <AppBar position="static" color="primary">
                 <Toolbar>
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        PSIL-AT Demand Model
+                        PSWEET
                     </Typography>
                     <Button color="inherit" href="/login">Login</Button>
                     <Button color="inherit" href="/register">Register</Button>
@@ -45,10 +45,10 @@ const LandingPage = () => {
                 }}
             >
                 <Typography variant="h2" sx={{ backgroundColor: "rgba(0,0,0,0)", p: 2 }}>
-                    Title Info
+                    Welcome to PSWEET!
                 </Typography>
                 <Typography variant="h6" sx={{ backgroundColor: "rgba(0,0,0,0)", p: 1, mt: 2 }}>
-                    Subtitle Here
+                    A Psilocybin Demand Model Tool
                 </Typography>
             </Box>
 

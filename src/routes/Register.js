@@ -33,14 +33,51 @@ function Register() {
     }, [loading, user, navigate]);
 
     const registerWithEmailAndPassword = async (name, email, password) => {
+        if (!name || !email || !password || !user_type || !employer) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return;
+        }
+
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredentials.user;
-            await setDoc(doc(db, "users", user.uid), { name: name, user_type: user_type, model: [], employer: employer });
+
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                user_type: user_type,
+                model: [],
+                employer: employer
+            });
+
+            console.log("User successfully registered:", user);
         } catch (error) {
-            alert("Invalid registration");
+            console.error("Error during registration:", error);
+
+            // Display more specific error messages
+            switch (error.code) {
+                case "auth/email-already-in-use":
+                    alert("This email is already in use. Please try logging in.");
+                    break;
+                case "auth/invalid-email":
+                    alert("Invalid email format. Please enter a valid email.");
+                    break;
+                case "auth/weak-password":
+                    alert("Weak password. Password must be at least 6 characters.");
+                    break;
+                case "auth/network-request-failed":
+                    alert("Network error. Please check your internet connection.");
+                    break;
+                default:
+                    alert("Registration failed: " + error.message);
+            }
         }
     };
+
 
     return (
         <ThemeProvider theme={theme}>

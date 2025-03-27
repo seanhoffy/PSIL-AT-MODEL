@@ -3,6 +3,7 @@ import LandingPage from "./routes/LandingPage";
 import LoginPage from "./routes/LoginPage";
 import Register from "./routes/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PDFPage from "./routes/research_paper";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/researchpaper" element={<PDFPage />} />
       </Routes>
     </Router>
     // <ThemeProvider theme={theme}>
