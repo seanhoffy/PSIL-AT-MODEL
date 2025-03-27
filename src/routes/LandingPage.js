@@ -30,9 +30,8 @@ const LandingPage = () => {
             {/* Hero Section */}
             <Box
                 sx={{
-                    height: "100vh",
+                    height: "70vh",
                     backgroundImage: "url(/heroimage.jpg)",
-                    backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundAttachment: "fixed",
                     display: "flex",
