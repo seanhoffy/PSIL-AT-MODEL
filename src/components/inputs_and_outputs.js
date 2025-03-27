@@ -20,6 +20,8 @@ import SourceInputList from './sources';
 import Spacer from './spacer'
 import { IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import MyDocument from './pdf/pdf.js';
+import { pdf } from '@react-pdf/renderer';
 
 const InputsForm = () => {
     const [model, setModel] = useState([]);
@@ -155,6 +157,12 @@ const InputsForm = () => {
         });
 
         setModel([trial_MDD.toFixed(0), trial_TRD.toFixed(0), real_MDD.toFixed(0), real_TRD.toFixed(0), comorbid_MDD.toFixed(0), comorbid_TRD.toFixed(0)]);
+    };
+
+    const handleDownload = async () => {
+        const blob = await pdf(<MyDocument formData={formData} results={results} />).toBlob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
     };
 
     // const textFieldStyle = {
@@ -522,14 +530,14 @@ const InputsForm = () => {
                             </Card>
                         </Grid>
                     </Grid>
-
                     <Button
                         color="primary"
                         type="submit"
                         variant="contained"
                         size="large"
+                        onClick={handleDownload}
                     >
-                        Download Results PDF
+                        Download PDF
                     </Button>
 
                     {/* Comorbid Results */}
