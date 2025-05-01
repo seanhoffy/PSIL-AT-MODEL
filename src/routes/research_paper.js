@@ -15,8 +15,9 @@ const theme = createTheme({
     },
 });
 
+// ✅ works after you moved the PDF to public/docs
 const docs = [
-    { uri: require("/Users/seanhoffy/PSIL-AT/psil-at-app/src/ResearchPaper.pdf") }, // Local File
+    { uri: `${process.env.PUBLIC_URL}/docs/ResearchPaper.pdf` },   // served by Firebase Hosting
 ];
 
 const PDFPage = () => {
