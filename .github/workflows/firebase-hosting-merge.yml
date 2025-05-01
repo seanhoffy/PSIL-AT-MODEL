@@ -1,8 +1,7 @@
 name: Deploy to Firebase Hosting on merge
-
 on:
   push:
-    branches: [main] # or whatever your default branch is
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -11,28 +10,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ---------- NEW: make sure Node is available ----------
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
-      # ---------- NEW: install dependencies in psil-at-app/ ----------
       - name: Install deps
         working-directory: psil-at-app
         run: npm ci
 
-      # ---------- build the React app ----------
       - name: Build
         working-directory: psil-at-app
         run: npm run build
 
-      # ---------- deploy ----------
       - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v1
+        uses: FirebaseExtended/action-hosting-deploy@v0**   # ← change v1 ➜ v0
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PSIL_AT_APP }}'
           channelId: live
           projectId: psil-at-app
-          entryPoint: psil-at-app # <-- tells the action where firebase.json is
+          entryPoint: psil-at-app        # tells the action where firebase.json lives
