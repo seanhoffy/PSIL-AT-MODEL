@@ -15,19 +15,22 @@ jobs:
         with:
           node-version: '20'
 
+      # ---------- install ----------
       - name: Install deps
-        working-directory: psil-at-app
+        working-directory: PSIL-AT/psil-at-app
         run: npm ci
 
+      # ---------- build ----------
       - name: Build
-        working-directory: psil-at-app
+        working-directory: PSIL-AT/psil-at-app
         run: npm run build
 
+      # ---------- deploy ----------
       - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0   # ← change v1 ➜ v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PSIL_AT_APP }}'
           channelId: live
           projectId: psil-at-app
-          entryPoint: psil-at-app        # tells the action where firebase.json lives
+          entryPoint: PSIL-AT/psil-at-app        # <─ add the parent folder here
