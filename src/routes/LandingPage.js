@@ -1,5 +1,16 @@
-import { AppBar, Toolbar, Button, Typography, Container, Box, Grid } from "@mui/material";
-import { Info, LockOpen } from "@mui/icons-material";
+import {
+    Button,
+    Typography,
+    Box,
+    Grid,
+    Paper,
+} from "@mui/material";
+import {
+    Map,
+    FilterAlt,
+    Download,
+    MenuBook,
+} from "@mui/icons-material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -15,63 +26,138 @@ const LandingPage = () => {
     }, [loading, user, navigate]);
 
     return (
-        <>
-            {/* Header */}
-            <AppBar position="static" color="primary">
-                <Toolbar>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        PSWEET
-                    </Typography>
-                    <Button color="inherit" href="/login">Login</Button>
-                    <Button color="inherit" href="/register">Register</Button>
-                </Toolbar>
-            </AppBar>
-
+        <Box sx={{ backgroundColor: "#FFFFFF", fontFamily: 'Inter, sans-serif' }}>
             {/* Hero Section */}
             <Box
                 sx={{
-                    height: "70vh",
-                    backgroundImage: "url(/heroimage.jpg)",
-                    backgroundPosition: "center",
-                    backgroundAttachment: "fixed",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    background: "url(/heroim.png) center/cover no-repeat",
+                    backgroundColor: "#FFFFFF",
                     color: "white",
-                    textAlign: "center",
-                    gap: 1,
+                    textAlign: "left",
+                    px: { xs: 3, md: 12 },
+                    py: 10,
+                    position: "relative",
                 }}
             >
-                <Typography variant="h2" sx={{ backgroundColor: "rgba(0,0,0,0)", p: 2 }}>
-                    Welcome to PSWEET!
-                </Typography>
-                <Typography variant="h6" sx={{ backgroundColor: "rgba(0,0,0,0)", p: 1, mt: 2 }}>
-                    A Psilocybin Demand Model Tool
-                </Typography>
+                {/* Title and Button on top */}
+                <Box sx={{ position: "absolute", top: 24, left: { xs: 24, md: 96 }, display: 'flex', justifyContent: 'space-between', width: 'calc(100% - 150px)', alignItems: 'center' }}>
+                    <Typography variant="h6" fontWeight="bold" sx={{ color: "#FFFFFF" }}>
+                        PATPath.org
+                    </Typography>
+                    <Button variant="contained" href="/register" sx={{ backgroundColor: "#023e74" }}>
+                        Try the Model
+                    </Button>
+                </Box>
+
+                <Box sx={{ pt: 4 }}>
+                    <Typography variant="h3" fontWeight="bold" gutterBottom>
+                        Model the Demand for Psilocybin
+                    </Typography>
+                    <Typography variant="h3" fontWeight="bold" gutterBottom>
+                        Treatment for Depression in Your Region
+                    </Typography>
+                    <Typography variant="h6" maxWidth={"md"} sx={{ mt: 5, mb: 4, color: "#023e74" }}>
+                        UNDER DEVELOPMENT. An interactive economic tool to estimate the local and national need
+                        for psilocybin-assisted therapy for depression, based on real-world data and peer-reviewed trials.
+                    </Typography>
+                    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                        <Button variant="contained" href="/register" sx={{ backgroundColor: "#023e74" }}>
+                            Try the Model
+                        </Button>
+                        <Button variant="outlined" color="inherit" href="/login">
+                            Login
+                        </Button>
+                    </Box>
+                </Box>
             </Box>
 
-            {/* Information Section */}
-            <Container sx={{ py: 5 }}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Info fontSize="large" color="primary" />
-                        <Typography variant="h6">Feature 1</Typography>
-                        <Typography variant="body1">Description of feature 1.</Typography>
+            {/* Why This Model Matters */}
+            <Box sx={{ px: { xs: 3, md: 12 }, py: 8 }}>
+                <Typography variant="h5" fontWeight="bold" gutterBottom>
+                    Why This Model Matters
+                </Typography>
+                <Typography paragraph>
+                    Depression, PTSD, and addiction are rising globally, and emerging research
+                    shows psilocybin-assisted therapy may help. Yet, there's little clarity on
+                    where and how it's needed.
+                </Typography>
+                <Typography paragraph>
+                    Our tool estimates treatment demand using:
+                </Typography>
+                <ul>
+                    <li>Population and health data</li>
+                    <li>Regional customization</li>
+                    <li>Diagnostic prevalence rates</li>
+                </ul>
+                <Typography paragraph>
+                    💡 Use this model to support policy funding, and clinical planning.
+                </Typography>
+
+                <Grid container spacing={4} mt={4}>
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Paper variant="outlined" sx={{ p: 3 }}>
+                            <Map color="primary" fontSize="large" />
+                            <Typography variant="h6" fontWeight="bold">
+                                Interactive Maps and Charts
+                            </Typography>
+                            <Typography>
+                                Visualize demand estimates across US cities, counties, or Zip codes.
+                            </Typography>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <LockOpen fontSize="large" color="primary" />
-                        <Typography variant="h6">Feature 2</Typography>
-                        <Typography variant="body1">Description of feature 2.</Typography>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Paper variant="outlined" sx={{ p: 3 }}>
+                            <FilterAlt color="primary" fontSize="large" />
+                            <Typography variant="h6" fontWeight="bold">
+                                Customizable Input Criteria
+                            </Typography>
+                            <Typography>
+                                Choose inclusion/exclusion filters like age, comorbidities, or prior treatment.
+                            </Typography>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Info fontSize="large" color="primary" />
-                        <Typography variant="h6">Feature 3</Typography>
-                        <Typography variant="body1">Description of feature 3.</Typography>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Paper variant="outlined" sx={{ p: 3 }}>
+                            <Download color="primary" fontSize="large" />
+                            <Typography variant="h6" fontWeight="bold">
+                                PDF Report Generation
+                            </Typography>
+                            <Typography>
+                                Download beautiful, publication-ready reports for stakeholders or publications.
+                            </Typography>
+                        </Paper>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Paper variant="outlined" sx={{ p: 3 }}>
+                            <MenuBook color="primary" fontSize="large" />
+                            <Typography variant="h6" fontWeight="bold">
+                                Data Transparency
+                            </Typography>
+                            <Typography>
+                                Peer-reviewed sources and national datasets (e.g. CDC, SAMHSA, Census)
+                            </Typography>
+                        </Paper>
                     </Grid>
                 </Grid>
-            </Container>
-        </>
+
+                <Box mt={6}>
+                    <Typography
+                        fontStyle="italic"
+                        fontSize="1.1rem"
+                        color="text.secondary"
+                        gutterBottom
+                    >
+                        “Insert Quote.”
+                    </Typography>
+                    <Typography align="right" fontSize="0.9rem">
+                        – Dr. Elliot Marseille, Health Economist, UC Berkeley
+                    </Typography>
+                </Box>
+            </Box>
+        </Box>
     );
 };
 

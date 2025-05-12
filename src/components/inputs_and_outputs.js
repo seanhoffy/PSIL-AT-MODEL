@@ -474,10 +474,10 @@ const InputsForm = () => {
                             <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>{formData.modelTitle} Results</Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>Our Trial Exclusion Data</Typography>
+                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>Prevalence Based on Trial Exclusion Criteria</Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>{formData.geographicArea} Data</Typography>
+                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>PrevalenceBased on {formData.geographicArea} (Real World) Exclusion Criteria</Typography>
                         </Grid>
                     </Grid>
 
