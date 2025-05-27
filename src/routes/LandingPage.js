@@ -57,7 +57,7 @@ const LandingPage = () => {
                         Treatment for Depression in Your Region
                     </Typography>
                     <Typography variant="h6" maxWidth={"md"} sx={{ mt: 5, mb: 4, color: "#023e74" }}>
-                        UNDER DEVELOPMENT. An interactive economic tool to estimate the local and national need
+                        THIS WEB APP IS UNDER DEVELOPMENT AND NOT INTENDED FOR USE OUTSIDE OF TESTING FOR DEVELOPMENT PURPOSES. An interactive economic tool to estimate the local and national need
                         for psilocybin-assisted therapy for depression, based on real-world data and peer-reviewed trials.
                     </Typography>
                     <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>

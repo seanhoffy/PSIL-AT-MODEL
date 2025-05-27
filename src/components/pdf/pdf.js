@@ -44,6 +44,92 @@ const styles = StyleSheet.create({
     tableLastCell: {
         borderRight: 'none', // No right border for the last cell
     },
+    sectionTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 8,
+        color: '#023e74'
+    },
+    inputGrid: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginBottom: 10,
+        gap: 8,
+        justifyContent: 'space-between',
+        paddingHorizontal: 10
+    },
+    inputItem: {
+        width: '45%',
+        marginBottom: 5
+    },
+    label: {
+        fontSize: 10,
+        color: '#666'
+    },
+    value: {
+        fontSize: 12,
+        marginTop: 2
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20
+    },
+    subtitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
+    resultsGrid: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10
+    },
+    resultItem: {
+        width: '45%'
+    },
+    infoItem: {
+        width: '48%',  // Slightly wider to accommodate content
+        marginBottom: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    infoLabel: {
+        fontSize: 11,
+        color: '#666',
+        marginRight: 4,
+        width: '35%',  // Fixed width for label
+    },
+    infoValue: {
+        fontSize: 11,
+        width: '65%',  // Fixed width for value
+        color: '#000'
+    },
+    infoSection: {
+        marginBottom: 10
+    },
+    infoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 8
+    },
+    infoColumn: {
+        width: '48%'
+    },
+    generalInfoLabel: {  // Renamed from infoLabel
+        fontSize: 11,
+        color: '#666',
+        marginBottom: 2
+    },
+    generalInfoValue: {  // Renamed from infoValue
+        fontSize: 12,
+        color: '#000'
+    },
 });
 
 // PDF Document Component
@@ -62,60 +148,141 @@ const MyDocument = ({ formData, results }) => {
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.section}>
-                    <Text style={[styles.title, { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 }]}>
-                        PSWEET Model Results
-                    </Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.title}>Model Title:</Text>
-                    <Text style={styles.text}>{formData.modelTitle || "N/A"}</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.title}>Geographic Area:</Text>
-                    <Text style={styles.text}>{formData.geographicArea || "N/A"}</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.title}>Motivation:</Text>
-                    <Text style={styles.text}>{formData.motivation || "N/A"}</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text style={styles.title}>Additional Comments:</Text>
-                    <Text style={styles.text}>{formData.additionalComments || "N/A"}</Text>
+                    <Text style={styles.header}>PATpath Model Report</Text>
                 </View>
 
-                {/* Table for Results */}
-                <View style={styles.table}>
-                    <View style={styles.tableRow}>
-                        <View style={[styles.tableCell, styles.tableHeader]}>
-                            <Text>Disorder</Text>
+                {/* General Information */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>General Information</Text>
+                    <View style={styles.infoSection}>
+                        <View style={styles.infoRow}>
+                            <View style={styles.infoColumn}>
+                                <Text style={styles.generalInfoLabel}>Model Title:</Text>
+                                <Text style={styles.generalInfoValue}>{formData.modelTitle || "N/A"}</Text>
+                            </View>
+                            <View style={styles.infoColumn}>
+                                <Text style={styles.generalInfoLabel}>Geographic Area:</Text>
+                                <Text style={styles.generalInfoValue}>{formData.geographicArea || "N/A"}</Text>
+                            </View>
                         </View>
-                        <View style={[styles.tableCell, styles.tableHeader]}>
-                            <Text>Our Trial Data</Text>
-                        </View>
-                        <View style={[styles.tableCell, styles.tableHeader]}>
-                            <Text>{formData.geographicArea} Data</Text>
+                        <View style={styles.infoRow}>
+                            <View style={styles.infoColumn}>
+                                <Text style={styles.generalInfoLabel}>Motivation:</Text>
+                                <Text style={styles.generalInfoValue}>{formData.motivation || "N/A"}</Text>
+                            </View>
+                            <View style={styles.infoColumn}>
+                                <Text style={styles.generalInfoLabel}>Additional Comments:</Text>
+                                <Text style={styles.generalInfoValue}>{formData.additionalComments || "N/A"}</Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableCell}>
-                            <Text>Major Depressive Disorder</Text>
+                </View>
+
+                {/* Prevalence Data */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Prevalence Data</Text>
+                    <View style={styles.inputGrid}>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Total MDD Population:</Text>
+                            <Text style={styles.value}>{formData.MDD?.toLocaleString() || "N/A"}</Text>
                         </View>
-                        <View style={styles.tableCell}>
-                            <Text>{new Intl.NumberFormat().format(results.trial.MDD) || "N/A"}</Text>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>TRD Percentage:</Text>
+                            <Text style={styles.value}>{formData.TRD_P}%</Text>
                         </View>
-                        <View style={[styles.tableCell, styles.tableLastCell]}>
-                            <Text>{new Intl.NumberFormat().format(results.real.MDD) || "N/A"}</Text>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>TRD Population:</Text>
+                            <Text style={styles.value}>{formData.TRD?.toLocaleString() || "N/A"}</Text>
                         </View>
                     </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableCell}>
-                            <Text>Treatment-Resistant Depression</Text>
+                </View>
+
+                {/* Exclusion Criteria */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Exclusion Criteria Percentages</Text>
+                    <View style={styles.inputGrid}>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Psychotic or Manic Disorder:</Text>
+                            <Text style={styles.value}>{formData.manic_P}%</Text>
                         </View>
-                        <View style={styles.tableCell}>
-                            <Text>{new Intl.NumberFormat().format(results.trial.TRD) || "N/A"}</Text>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Suicide Attempt (Past Year):</Text>
+                            <Text style={styles.value}>{formData.suicide_P}%</Text>
                         </View>
-                        <View style={[styles.tableCell, styles.tableLastCell]}>
-                            <Text>{new Intl.NumberFormat().format(results.real.TRD) || "N/A"}</Text>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Diabetes (uncontrolled):</Text>
+                            <Text style={styles.value}>{formData.diabetes_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Stroke:</Text>
+                            <Text style={styles.value}>{formData.stroke_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Heart Attack (Last Year):</Text>
+                            <Text style={styles.value}>{formData.heart_attack_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Blood Pressure (140+/90+):</Text>
+                            <Text style={styles.value}>{formData.blood_pressure_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Epilepsy:</Text>
+                            <Text style={styles.value}>{formData.epilepsy_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Personality Disorder:</Text>
+                            <Text style={styles.value}>{formData.personality_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Hepatic Impairment:</Text>
+                            <Text style={styles.value}>{formData.hepatic_P}%</Text>
+                        </View>
+                    </View>
+                </View>
+
+                {/* Double Counting Adjustments */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Double Counting Adjustments</Text>
+                    <View style={styles.inputGrid}>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Psychological Problems:</Text>
+                            <Text style={styles.value}>{formData.psycological_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Health Conditions:</Text>
+                            <Text style={styles.value}>{formData.health_P}%</Text>
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Text style={styles.label}>Lower Hepatic Impairment:</Text>
+                            <Text style={styles.value}>{formData.comorbid_hepatic_P}%</Text>
+                        </View>
+                    </View>
+                </View>
+
+                {/* Results Section */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Results</Text>
+                    <Text style={styles.subtitle}>Trial Exclusion Criteria Results</Text>
+                    <View style={styles.resultsGrid}>
+                        <View style={styles.resultItem}>
+                            <Text style={styles.label}>MDD Population:</Text>
+                            <Text style={styles.value}>{parseInt(results.trial.MDD).toLocaleString()}</Text>
+                        </View>
+                        <View style={styles.resultItem}>
+                            <Text style={styles.label}>TRD Population:</Text>
+                            <Text style={styles.value}>{parseInt(results.trial.TRD).toLocaleString()}</Text>
+                        </View>
+                    </View>
+
+                    <Text style={styles.subtitle}>Real World Exclusion Criteria Results</Text>
+                    <View style={styles.resultsGrid}>
+                        <View style={styles.resultItem}>
+                            <Text style={styles.label}>MDD Population:</Text>
+                            <Text style={styles.value}>{parseInt(results.real.MDD).toLocaleString()}</Text>
+                        </View>
+                        <View style={styles.resultItem}>
+                            <Text style={styles.label}>TRD Population:</Text>
+                            <Text style={styles.value}>{parseInt(results.real.TRD).toLocaleString()}</Text>
                         </View>
                     </View>
                 </View>

@@ -12,6 +12,8 @@ import {
     Card,
     CardContent,
     InputAdornment,
+    Checkbox,
+    FormControlLabel,
 } from '@mui/material';
 import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -22,6 +24,7 @@ import { IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import MyDocument from './pdf/pdf.js';
 import { pdf } from '@react-pdf/renderer';
+import EditIcon from "@mui/icons-material/Edit";
 
 const InputsForm = () => {
     const [model, setModel] = useState([]);
@@ -30,6 +33,9 @@ const InputsForm = () => {
     const [info1Open, setInfo1Open] = useState(false); // Renamed state variables
     const [info2Open, setInfo2Open] = useState(false); // Renamed state variables
     const [info3Open, setInfo3Open] = useState(false); // Renamed state variables
+    const [disclaimerOpen, setDisclaimerOpen] = useState(false);
+    const [disclaimerChecked, setDisclaimerChecked] = useState(false);
+    const [formDataTemp, setFormDataTemp] = useState(null);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -126,20 +132,35 @@ const InputsForm = () => {
             return;
         }
 
-        const trial_MDD = formData.MDD * 0.24;
-        const trial_TRD = formData.TRD * 0.24;
+        // Store form data temporarily and open disclaimer
+        setFormDataTemp(formData);
+        setDisclaimerOpen(true);
+    };
 
-        const real_P = Math.round(formData.manic_P + formData.suicide_P + formData.diabetes_P +
-            formData.stroke_P + formData.heart_attack_P + formData.blood_pressure_P +
-            formData.epilepsy_P + formData.personality_P + formData.hepatic_P);
+    const handleDisclaimerClose = () => {
+        setDisclaimerOpen(false);
+        setDisclaimerChecked(false);
+    };
 
-        const comorbid_p = Math.round(formData.psycological_P + formData.health_P + formData.epilepsy_P +
-            formData.personality_P + formData.comorbid_hepatic_P);
+    const handleFinalSubmit = () => {
+        if (!disclaimerChecked) {
+            return;
+        }
 
-        const real_MDD = formData.MDD * (1 - (real_P / 100));
-        const real_TRD = formData.TRD * (1 - (real_P / 100));
-        const comorbid_MDD = formData.MDD * (1 - (comorbid_p / 100));
-        const comorbid_TRD = formData.TRD * (1 - (comorbid_p / 100));
+        const trial_MDD = formDataTemp.MDD * 0.24;
+        const trial_TRD = formDataTemp.TRD * 0.24;
+
+        const real_P = Math.round(formDataTemp.manic_P + formDataTemp.suicide_P + formDataTemp.diabetes_P +
+            formDataTemp.stroke_P + formDataTemp.heart_attack_P + formDataTemp.blood_pressure_P +
+            formDataTemp.epilepsy_P + formDataTemp.personality_P + formDataTemp.hepatic_P);
+
+        const comorbid_p = Math.round(formDataTemp.psycological_P + formDataTemp.health_P + formDataTemp.epilepsy_P +
+            formDataTemp.personality_P + formDataTemp.comorbid_hepatic_P);
+
+        const real_MDD = formDataTemp.MDD * (1 - (real_P / 100));
+        const real_TRD = formDataTemp.TRD * (1 - (real_P / 100));
+        const comorbid_MDD = formDataTemp.MDD * (1 - (comorbid_p / 100));
+        const comorbid_TRD = formDataTemp.TRD * (1 - (comorbid_p / 100));
 
         setResults({
             trial: {
@@ -157,12 +178,29 @@ const InputsForm = () => {
         });
 
         setModel([trial_MDD.toFixed(0), trial_TRD.toFixed(0), real_MDD.toFixed(0), real_TRD.toFixed(0), comorbid_MDD.toFixed(0), comorbid_TRD.toFixed(0)]);
+        handleDisclaimerClose();
+
+        // Add a small delay to ensure the results are rendered before scrolling
+        setTimeout(() => {
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 100);
     };
 
     const handleDownload = async () => {
         const blob = await pdf(<MyDocument formData={formData} results={results} />).toBlob();
         const url = URL.createObjectURL(blob);
-        window.open(url, "_blank");
+        const a = document.createElement('a');
+        a.href = url;
+        // Create filename from model title and area, replace spaces with underscores
+        const filename = `${formData.modelTitle.replace(/\s+/g, '_')}.${formData.geographicArea.replace(/\s+/g, '_')}.pdf`;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     };
 
     // const textFieldStyle = {
@@ -403,10 +441,26 @@ const InputsForm = () => {
                     </Paper>
 
                     <Button
-                        sx={{ backgroundColor: "#D3D3D3", color: "black", "&:hover": { backgroundColor: "#D3D3E4" } }}
+                        sx={{ 
+                            backgroundColor: "#023e74",
+                            color: "white",
+                            padding: "10px 20px",
+                            borderRadius: "8px",
+                            boxShadow: 2,
+                            "&:hover": { 
+                                backgroundColor: "#034e91",
+                                transform: "translateY(-2px)",
+                                boxShadow: 3
+                            },
+                            transition: "all 0.2s ease",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1
+                        }}
                         variant="contained"
                         onClick={handleOpen}
-                        size="small">
+                        startIcon={<EditIcon />}
+                        size="medium">
                         Adjust for Double Counting (Optional)
                     </Button>
 
@@ -423,10 +477,10 @@ const InputsForm = () => {
                             <Typography variant="body2">
                                 Health Conditions: Percentage of MDD subjects with diabetes, stroke, heart attack in the last year, and/or high blood pressure (140+/90+ and treatement-resistant)
                             </Typography>
-                            <Typography variant="body2">
+                            <Typography variant="body2" sx={{ mb: 4 }}>
                                 Lower Hepatic Impairment: Percentage of MDD subjects with this condition.
                             </Typography>
-                            <Paper elevation={2} sx={{ p: 3 }}>
+                            <Paper elevation={2} sx={{ p: 3, mt: 2 }}>
                                 <Grid container spacing={3}>
                                     {[
                                         ['psycological_P', 'Psychological Problems (Manic, Suicide)'],
@@ -467,6 +521,54 @@ const InputsForm = () => {
                 </Box>
             </form>
 
+            {/* Disclaimer Dialog */}
+            <Dialog
+                open={disclaimerOpen}
+                onClose={handleDisclaimerClose}
+                maxWidth="sm"
+                fullWidth
+            >
+                <DialogTitle>Confirmation Required</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body1" sx={{ mb: 2 }}>
+                        Before proceeding with the calculation, please confirm:
+                    </Typography>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={disclaimerChecked}
+                                onChange={(e) => setDisclaimerChecked(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="I understand what each input to this model does and have read the information provided from the info buttons in each subsection."
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            marginLeft: 0,
+                            '.MuiFormControlLabel-label': {
+                                fontSize: '0.9rem',
+                                lineHeight: 1.4,
+                                marginLeft: 1
+                            }
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDisclaimerClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleFinalSubmit}
+                        color="primary"
+                        variant="contained"
+                        disabled={!disclaimerChecked}
+                    >
+                        Proceed
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             {results && (
                 <Paper elevation={2} sx={{ mt: 4, p: 3 }}>
                     <Grid container spacing={3} sx={{ mb: 2 }}>
@@ -477,7 +579,7 @@ const InputsForm = () => {
                             <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>Prevalence Based on Trial Exclusion Criteria</Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>PrevalenceBased on {formData.geographicArea} (Real World) Exclusion Criteria</Typography>
+                            <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>Prevalence Based on {formData.geographicArea} (Real World) Exclusion Criteria</Typography>
                         </Grid>
                     </Grid>
 

@@ -39,7 +39,7 @@ const NavBar = () => {
                     />
                 </ButtonBase>
                 <Typography variant="h5" component="div">
-                    PSWEET
+                    PATpath.org
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                     <Button color="inherit" onClick={() => navigate("/researchpaper")}>
