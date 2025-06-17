@@ -80,7 +80,7 @@ const LandingPage = () => {
                 >
                     <Box
                         component="img"
-                        src="/cepLogo.png"
+                        src="/cepLogo2.png"
                         alt="CEP Logo"
                         sx={{
                             width: { xs: 120, md: 180 },
