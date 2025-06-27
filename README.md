@@ -1,70 +1,190 @@
-# Getting Started with Create React App
+# PATpath.org - CEP Psilocybin-Assisted Therapy Demand Model
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive React web application for modeling and estimating demand for psilocybin-assisted therapy (PSIL-AT) for depression treatment. This application is based on peer-reviewed research by Rab et al, 2024 and provides an interactive platform for healthcare professionals, researchers, and policymakers to estimate treatment demand across different geographic regions.
 
-## Available Scripts
+## 🎯 Project Overview
 
-In the project directory, you can run:
+This application implements the CEP (Cost-Effectiveness and Policy) Model for psilocybin-assisted therapy demand estimation. It allows users to:
 
-### `npm start`
+- **Customize Input Parameters**: Adjust demographic data, exclusion criteria, and geographic-specific variables
+- **Calculate Treatment Demand**: Generate estimates for Major Depressive Disorder (MDD) and Treatment-Resistant Depression (TRD) populations
+- **Generate Detailed Reports**: Create comprehensive PDF reports with all inputs and results
+- **Save and Manage Models**: Store calculation history and results in user accounts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Key Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Interactive Model Calculator
+- **Customizable Geographic Areas**: Input specific regions or populations
+- **Adjustable Exclusion Criteria**: Modify percentages for various medical conditions
+- **Real-time Calculations**: Instant results with three different scenarios:
+  - **Trial Eligibility**: 24% of base population
+  - **Real-world Eligibility**: After applying medical exclusions
+  - **Comorbid Conditions**: Accounting for psychological and health comorbidities
 
-### `npm test`
+### User Management System
+- **User Registration & Authentication**: Secure login via Firebase Authentication
+- **Model History**: Save and retrieve previous calculations
+- **Personalized Dashboard**: Access to saved models and results
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Professional Reporting
+- **PDF Report Generation**: Comprehensive reports including:
+  - All input parameters and assumptions
+  - Detailed calculation results
+  - Geographic and demographic context
+  - Professional formatting for presentations and documentation
 
-### `npm run build`
+### Modern User Interface
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Material-UI Components**: Professional, accessible interface
+- **Intuitive Navigation**: Clear workflow from landing page to results
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🏗️ Technical Architecture
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend
+- **React 19**: Modern React with hooks and functional components
+- **Material-UI (MUI)**: Professional UI component library
+- **React Router**: Client-side routing and navigation
+- **React PDF Renderer**: Dynamic PDF generation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend & Data
+- **Firebase Authentication**: Secure user management
+- **Firestore Database**: Cloud-based data storage for user models
+- **Python Model**: Core mathematical calculations (see `src/model_math.py`)
 
-### `npm run eject`
+### Key Dependencies
+- `@mui/material` & `@mui/icons-material`: UI components
+- `@react-pdf/renderer`: PDF generation
+- `react-number-format`: Formatted number inputs
+- `firebase`: Authentication and database
+- `react-firebase-hooks`: Firebase integration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📊 Model Methodology
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application implements a peer-reviewed model that:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Identifies Eligible Populations**: Filters MDD and TRD populations based on validated inclusion/exclusion criteria
+2. **Applies Medical Exclusions**: Accounts for conditions that contraindicate psilocybin therapy:
+   - Bipolar disorder and mania
+   - Active suicidal ideation
+   - Cardiovascular conditions
+   - Neurological disorders
+   - Hepatic conditions
+   - Personality disorders
+3. **Considers Comorbidities**: Adjusts for psychological and health comorbidities
+4. **Geographic Customization**: Allows region-specific population adjustments
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
+- Firebase project (for authentication and database)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Clone the repository**
+   ```bash
+   git clone [repository-url]
+   cd psil-at-app
+   ```
 
-### Code Splitting
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. **Configure Firebase**
+   - Create a Firebase project
+   - Enable Authentication and Firestore
+   - Update `src/firebase.js` with your Firebase configuration
 
-### Analyzing the Bundle Size
+4. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-### Making a Progressive Web App
+## 📁 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+psil-at-app/
+├── public/                 # Static assets
+│   ├── index.html         # Main HTML template
+│   ├── cepLogo2.png       # CEP logo
+│   └── heroim.png         # Hero background image
+├── src/
+│   ├── components/        # Reusable UI components
+│   │   ├── inputs_and_outputs.js    # Main calculator component
+│   │   ├── NavBar.js               # Navigation component
+│   │   ├── SimpleNavBar.js         # Simplified navigation
+│   │   ├── sources.js              # Data source management
+│   │   └── pdf/                    # PDF generation components
+│   ├── routes/            # Page components
+│   │   ├── LandingPage.js          # Homepage with feature overview
+│   │   ├── HomePage.js             # Main calculator page
+│   │   ├── LoginPage.js            # User authentication
+│   │   ├── Register.js             # User registration
+│   │   └── research_paper.js       # PDF viewer
+│   ├── model_math.py     # Core mathematical model
+│   ├── firebase.js       # Firebase configuration
+│   └── App.js            # Main application component
+├── package.json          # Dependencies and scripts
+└── README.md            # This file
+```
 
-### Advanced Configuration
+## 🔧 Available Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **`npm start`**: Runs the app in development mode
+- **`npm test`**: Launches the test runner
+- **`npm run build`**: Builds the app for production
+- **`npm run eject`**: Ejects from Create React App (one-way operation)
 
-### Deployment
+## 📚 Usage Guide
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### For New Users
+1. Visit the landing page to learn about the model
+2. Register for an account or log in
+3. Navigate to the calculator page
+4. Enter your geographic area and model title
+5. Adjust population parameters as needed
+6. Review and submit calculations
+7. Download your comprehensive PDF report
 
-### `npm run build` fails to minify
+### For Researchers
+- Use the customizable inputs to test different scenarios
+- Generate reports for academic presentations
+- Save multiple models for comparison
+- Export results for further analysis
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### For Healthcare Professionals
+- Estimate treatment demand for specific regions
+- Plan resource allocation based on model outputs
+- Generate professional reports for stakeholders
+- Track changes in demand over time
+
+## 🔒 Security & Privacy
+
+- **User Authentication**: Secure login via Firebase
+- **Data Protection**: User data stored securely in Firestore
+- **Development Notice**: Clear warnings about development status
+- **Input Validation**: Comprehensive form validation
+
+## 🤝 Contributing
+
+This project is developed by the Collaborative for the Economics of Psychedelics (CEP) at UC Berkeley. For contributions or questions, please contact the development team.
+
+## 📄 License
+
+This project is proprietary software developed for research and policy analysis purposes.
+
+## 🙏 Acknowledgments
+
+- **Research Foundation**: Based on peer-reviewed work by Rab et al, 2024
+- **CEP Team**: University of California, Berkeley
+- **Development Team**: PSIL-AT Application Development
+
+---
+
+**Note**: This application is currently under development and intended for testing and research purposes only.
