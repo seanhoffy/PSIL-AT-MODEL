@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Typography, Box, Button, ButtonBase } from '@mui/material';
-import logo from '../logo.svg';
+// import logo from '../logo.svg'; // Remove this line
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useEffect } from "react";
@@ -25,29 +25,28 @@ const NavBar = () => {
     }, [user, loading, navigate]);
 
     return (
-        <AppBar position="static" sx={{ height: '80px' }}>
+        <AppBar position="static" sx={{ height: '80px', backgroundColor: '#FFFFFF', color: '#000000' }}>
             <Toolbar sx={{ height: '100%' }}>
-                <ButtonBase onClick={() => navigate('/home')}>
+                <ButtonBase onClick={() => navigate('/home')} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box component="img"
-                        src={logo}
-                        alt="logo"
+                        src={process.env.PUBLIC_URL + '/cepLogo2.png'}
+                        alt="CEP Logo"
                         sx={{
-                            height: 60,
-                            width: 60,
-                            marginRight: 2
+                            height: 48,
+                            width: 'auto',
+                            objectFit: 'contain',
+                            marginRight: 1
                         }}
                     />
                 </ButtonBase>
-                <Typography variant="h5" component="div">
-                    PATpath.org
-                </Typography>
+                <ButtonBase onClick={() => navigate('/home')} sx={{ textTransform: 'none' }}>
+                    <Typography variant="h5" component="div" sx={{ color: '#000000', ml: 0.5 }}>
+                        PATpath.org
+                    </Typography>
+                </ButtonBase>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-                    <Button color="inherit" onClick={() => navigate("/researchpaper")}>
-                        ABOUT
-                    </Button>
-                    <Button color="inherit" onClick={handleLogout}>
-                        Logout
-                    </Button>
+                    <Button color="inherit" onClick={() => navigate("/researchpaper")} sx={{ color: '#000000' }}>ABOUT</Button>
+                    <Button color="inherit" onClick={handleLogout} sx={{ color: '#000000' }}>Logout</Button>
                 </Box>
             </Toolbar>
         </AppBar>

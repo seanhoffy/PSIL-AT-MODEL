@@ -6,10 +6,10 @@ import NavBar from '../components/NavBar';
 const theme = createTheme({
     palette: {
         background: {
-            default: '#328fa8',
+            default: '#023e74',
         },
         primary: {
-            main: '#282c34',
+            main: '#023e74',
         },
     },
 });

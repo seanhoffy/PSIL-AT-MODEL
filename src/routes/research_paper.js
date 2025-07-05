@@ -7,10 +7,10 @@ import DownloadIcon from '@mui/icons-material/Download';
 const theme = createTheme({
     palette: {
         background: {
-            default: '#328fa8',
+            default: '#023e74',
         },
         primary: {
-            main: '#282c34',
+            main: '#023e74',
         },
     },
 });
@@ -36,7 +36,7 @@ const PDFPage = () => {
                 flexDirection: 'column', 
                 alignItems: 'center', 
                 padding: '20px',
-                backgroundColor: '#328fa8',
+                backgroundColor: '#023e74',
                 minHeight: 'calc(100vh - 80px)'
             }}>
                 <Box sx={{ 
