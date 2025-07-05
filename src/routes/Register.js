@@ -5,16 +5,15 @@ import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore";
 import { FormControl, MenuItem, InputLabel, Select, Box, Avatar, Button, Card, CardActions, CardContent, CardHeader, createTheme, Grid, TextField, ThemeProvider, CssBaseline } from "@mui/material";
-import logo from '../logo.svg';
 import SimpleNavBar from '../components/SimpleNavBar';
 
 const theme = createTheme({
     palette: {
         background: {
-            default: '#328fa8',
+            default: '#023e74',
         },
         primary: {
-            main: '#282c34',
+            main: '#023e74',
         },
     },
 });
@@ -101,13 +100,14 @@ function Register() {
                             <CardHeader
                                 sx={{ mt: 3, marginBottom: -2 }}
                                 avatar={
-                                    <Avatar sx={{ mr: -1, bgcolor: '#282c34' }}>
+                                    <Avatar sx={{ mr: -1, bgcolor: '#023e74' }}>
                                         <Box component="img"
-                                            src={logo}
-                                            alt="logo"
+                                            src="/cepLogo2.png"
+                                            alt="CEP Logo"
                                             sx={{
                                                 height: 60,
-                                                width: 60,
+                                                width: 'auto',
+                                                objectFit: 'contain',
                                             }}
                                         />
                                     </Avatar>

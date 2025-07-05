@@ -514,7 +514,17 @@ const InputsForm = () => {
                         type="submit"
                         variant="contained"
                         size="large"
-                        sx={{ mt: 3 }}
+                        sx={{ 
+                            mt: 3,
+                            backgroundColor: '#FFFFFF',
+                            color: '#023e74',
+                            border: '2px solid #023e74',
+                            '&:hover': {
+                                backgroundColor: '#f0f4fa',
+                                color: '#023e74',
+                                border: '2px solid #023e74'
+                            }
+                        }}
                     >
                         Calculate Results
                     </Button>
