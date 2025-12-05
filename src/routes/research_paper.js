@@ -1,19 +1,10 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
-import { createTheme, ThemeProvider, CssBaseline, Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import '../App.css';
 import DownloadIcon from '@mui/icons-material/Download';
-
-const theme = createTheme({
-    palette: {
-        background: {
-            default: '#023e74',
-        },
-        primary: {
-            main: '#023e74',
-        },
-    },
-});
+import ThemeProvider from '../components/common/ThemeProvider';
+import { COLORS } from '../constants/colors';
 
 const PDFPage = () => {
     const handleDownload = () => {
@@ -26,8 +17,7 @@ const PDFPage = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <ThemeProvider>
             <div className="App">
                 <NavBar />
             </div>
@@ -36,7 +26,7 @@ const PDFPage = () => {
                 flexDirection: 'column', 
                 alignItems: 'center', 
                 padding: '20px',
-                backgroundColor: '#023e74',
+                backgroundColor: COLORS.primary,
                 minHeight: 'calc(100vh - 80px)'
             }}>
                 <Box sx={{ 
@@ -48,7 +38,7 @@ const PDFPage = () => {
                     maxWidth: '1200px',
                     textAlign: 'center'
                 }}>
-                    <Typography variant="h5" sx={{ mb: 2, color: '#023e74' }}>
+                    <Typography variant="h5" sx={{ mb: 2, color: COLORS.primary }}>
                         Research Paper
                     </Typography>
                     
@@ -58,9 +48,9 @@ const PDFPage = () => {
                             startIcon={<DownloadIcon />}
                             onClick={handleDownload}
                             sx={{ 
-                                backgroundColor: '#023e74',
+                                backgroundColor: COLORS.primary,
                                 '&:hover': {
-                                    backgroundColor: '#034e91'
+                                    backgroundColor: COLORS.primaryHover
                                 }
                             }}
                         >

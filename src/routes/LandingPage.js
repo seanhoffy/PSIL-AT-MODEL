@@ -52,30 +52,25 @@ const LandingPage = () => {
                     color: "white",
                     textAlign: "left",
                     px: { xs: 3, md: 12 },
-                    pt: 10,
-                    pb: 4,
+                    pt: { xs: 4, md: 6 },
+                    pb: { xs: 4, md: 6 },
                     position: "relative",
                     overflow: "hidden",
                 }}
             >
-                {/* Title and Button on top */}
-                <Box sx={{ position: "absolute", top: 24, left: { xs: 24, md: 96 }, display: 'flex', justifyContent: 'space-between', width: 'calc(100% - 150px)', alignItems: 'center' }}>
-                    <Typography variant="h5" fontWeight="bold" sx={{ color: "#FFFFFF" }}>
-                        PATpath.org
-                    </Typography>
-                </Box>
-
-                {/* CEP Logo and Text in bottom right */}
+                {/* CEP Logo and Text - Hidden on small screens, shown on medium+ */}
                 <Box
                     sx={{
                         position: "absolute",
                         right: { xs: 16, md: 48 },
-                        bottom: { xs: 16, md: 24 },
-                        display: "flex",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        display: { xs: "none", md: "flex" }, // Hide on mobile, show on medium screens and up
                         flexDirection: "column",
                         alignItems: "center",
                         zIndex: 2,
                         pointerEvents: "none",
+                        maxWidth: { md: "260px", lg: "280px", xl: "300px" },
                     }}
                 >
                     <Box
@@ -83,8 +78,8 @@ const LandingPage = () => {
                         src="/cepLogo2.png"
                         alt="CEP Logo"
                         sx={{
-                            width: { xs: 120, md: 180 },
-                            maxHeight: { xs: 120, md: 180 },
+                            width: { md: 200, lg: 234, xl: 260 },
+                            maxHeight: { md: 200, lg: 234, xl: 260 },
                             height: "auto",
                             opacity: 0.95,
                             mb: 1,
@@ -98,36 +93,78 @@ const LandingPage = () => {
                             borderRadius: 1,
                             mt: 0,
                             textAlign: "center",
+                            maxWidth: { md: "360px", lg: "380px", xl: "400px" },
                         }}
                     >
                         <Typography
                             variant="caption"
                             sx={{
                                 color: "#023e74",
-                                fontWeight: 500,
+                                fontWeight: "bold",
                                 lineHeight: 1.3,
+                                fontSize: { md: "0.8rem", lg: "0.85rem", xl: "0.9rem" },
                             }}
                         >
                             University of California, Berkeley.<br />
                             Collaborative for the Economics of Psychedelics.<br />
-                            We crunch the numbers that brings psychedelics to life.
+                            <em>We crunch the numbers that bring psychedelics to life.</em>
                         </Typography>
                     </Box>
                 </Box>
 
-                <Box sx={{ pt: 4 }}>
-                    <Typography variant="h3" fontWeight="bold" gutterBottom>
+                {/* Main Content - Added padding-right to prevent overlap on medium screens */}
+                <Box 
+                    sx={{ 
+                        pt: { xs: 2, md: 2 },
+                        pr: { xs: 0, md: "280px", lg: "320px" }, // Add padding when logo is visible
+                        maxWidth: { xs: "100%", md: "950px", lg: "950px" }, // Allow a bit more width for the hero text
+                    }}
+                >
+                    <Typography 
+                        variant="h3" 
+                        fontWeight="bold" 
+                        gutterBottom
+                        sx={{
+                            fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.75rem", lg: "3rem" },
+                        }}
+                    >
                         Model the Demand for
                     </Typography>
-                    <Typography variant="h3" fontWeight="bold" gutterBottom>
+                    <Typography 
+                        variant="h3" 
+                        fontWeight="bold" 
+                        gutterBottom
+                        sx={{
+                            fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.75rem", lg: "3rem" },
+                        }}
+                    >
                         Psilocybin Treatment for Depression.
                     </Typography>
                     <Typography
                         variant="h6"
-                        maxWidth="md"
-                        sx={{ mt: 5, mb: 4, color: "#023e74" }}
+                        fontWeight="bold"
+                        sx={{ 
+                            mt: { xs: 3, md: 5 }, 
+                            color: "#023e74",
+                            fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
+                            lineHeight: 1.6,
+                            maxWidth: "950px",
+                        }}
                     >
-                        Based on a peer-reviewed model by{' '}
+                        This platform is provided without charge to facilitate shared progress in psychedelic science.
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        sx={{ 
+                            mt: { xs: 3, md: 5 }, 
+                            mb: 4, 
+                            color: "#023e74",
+                            fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
+                            lineHeight: 1.6,
+                            maxWidth: "850px", // Limit paragraph width to prevent it from stretching too thin
+                        }}
+                    >
+                        What is PATpath? Based on a peer-reviewed model by{' '}
                         <a
                             href="https://www.doi.org/10.61373/pp024r.0025"
                             target="_blank"
@@ -138,17 +175,84 @@ const LandingPage = () => {
                         </a>
                         , the CEP psilocybin-assisted therapy (PSIL-AT) demand model
                         provides estimates of the potential demand for PSIL-AT. It identifies eligible
-                        individuals among those with major depressive disorder (MDD) and treatment-
-                        resistant depression (TRD). It applies validated inclusion and exclusion criteria
-                        from peer-reviewed research to accurately project treatment needs.
+                        individuals among those with major depressive disorder (MDD) and those with 
+                        treatment-resistant depression (TRD). It applies validated inclusion and exclusion 
+                        criteria from peer-reviewed research to accurately project treatment needs.
                     </Typography>
-                    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-                        <Button variant="contained" onClick={() => handleDevNotice('/register')} sx={{ backgroundColor: "#023e74" }}>
+                    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mt: { xs: 3, md: 4 } }}>
+                        <Button 
+                            variant="contained" 
+                            onClick={() => handleDevNotice('/register')} 
+                            sx={{ 
+                                backgroundColor: "#023e74",
+                                fontSize: { xs: "0.875rem", sm: "1rem" },
+                                px: { xs: 2, sm: 3 },
+                                py: { xs: 1, sm: 1.5 },
+                            }}
+                        >
                             Try the Model
                         </Button>
-                        <Button variant="outlined" color="inherit" onClick={() => handleDevNotice('/login')}>
+                        <Button 
+                            variant="outlined" 
+                            color="inherit" 
+                            onClick={() => handleDevNotice('/login')}
+                            sx={{
+                                fontSize: { xs: "0.875rem", sm: "1rem" },
+                                px: { xs: 2, sm: 3 },
+                                py: { xs: 1, sm: 1.5 },
+                            }}
+                        >
                             Login
                         </Button>
+                    </Box>
+                </Box>
+
+                {/* CEP Logo for mobile/tablet - shown below content on smaller screens */}
+                <Box
+                    sx={{
+                        display: { xs: "flex", md: "none" }, // Show on mobile only, hide on medium screens and up
+                        flexDirection: "column",
+                        alignItems: "center",
+                        mt: { xs: 3, sm: 4 },
+                        mb: 1,
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src="/cepLogo2.png"
+                        alt="CEP Logo"
+                        sx={{
+                            width: { xs: 120, sm: 156 },
+                            maxHeight: { xs: 120, sm: 156 },
+                            height: "auto",
+                            opacity: 0.95,
+                            mb: 1,
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            background: "transparent",
+                            px: 2,
+                            py: 1,
+                            borderRadius: 1,
+                            textAlign: "center",
+                            maxWidth: { xs: "340px", sm: "360px" },
+                        }}
+                    >
+                        <Typography
+                            variant="caption"
+                            sx={{
+                                color: "#023e74",
+                                fontWeight: "bold",
+                                lineHeight: 1.3,
+                                fontSize: { xs: "0.80rem", sm: "0.85rem" },
+                            }}
+                        >
+                            University of California, Berkeley.<br />
+                            Collaborative for the Economics of Psychedelics.<br />
+                            <em>We crunch the numbers that</em><br />
+                            <em>brings psychedelics to life.</em>
+                        </Typography>
                     </Box>
                 </Box>
             </Box>
@@ -185,57 +289,48 @@ const LandingPage = () => {
             </Dialog>
 
             {/* What Does Our Model Offer Section */}
-            <Box sx={{ px: { xs: 3, md: 12 }, py: 8, pb: 15 }}>
+            <Box sx={{ px: { xs: 3, md: 12 }, py: { xs: 4, md: 5 }, pb: { xs: 6, md: 8 } }}>
                 <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ 
                     textAlign: 'center',
-                    mb: 4,
-                    color: '#023e74'
+                    mb: 3,
+                    color: '#023e74',
+                    fontSize: { xs: "2rem", sm: "2.25rem", md: "2.5rem" }
                 }}>
-                    What Does The CEP Model Offer?
+                    What Does PATpath Offer?
                 </Typography>
                 <Grid container spacing={3}>
                     {/* 1. Customizable Inputs */}
                     <Grid item xs={12} sm={6} md={6}>
                         <Paper elevation={3} sx={{ 
-                            p: 3,
+                            p: 1,
                             height: '100%',
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
                         }}>
                             <FilterAlt color="primary" fontSize="large" />
-                            <Typography variant="h6" fontWeight="bold" sx={{ color: '#023e74' }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
                                 Customizable Inputs
                             </Typography>
-                            <Typography sx={{ color: '#023e74' }}>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: -1.5 }}>
                                 Choose population data and inclusion and exclusion criteria.
                             </Typography>
                         </Paper>
                     </Grid>
 
-                    {/* 2. Real-time Calculations */}
+                    {/* 2. PDF Report Generation */}
                     <Grid item xs={12} sm={6} md={6}>
                         <Paper elevation={3} sx={{ 
-                            p: 3,
+                            p: 1,
                             height: '100%',
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
                         }}>
-                            <Calculate color="primary" fontSize="large" />
-                            <Typography variant="h6" fontWeight="bold" sx={{ color: '#023e74' }}>
-                                Real-time Calculations
+                            <Download color="primary" fontSize="large" />
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
+                                PDF Report Generation
                             </Typography>
-                            <Typography sx={{ color: '#023e74' }}>
-                                Instantly see how inclusion/exclusion criteria affect treatment demand for your population.
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: -1.5 }}>
+                                Download publication-ready reports for your use case.
                             </Typography>
                         </Paper>
                     </Grid>
@@ -243,45 +338,35 @@ const LandingPage = () => {
                     {/* 3. Data Transparency */}
                     <Grid item xs={12} sm={6} md={6}>
                         <Paper elevation={3} sx={{ 
-                            p: 3,
+                            p: 1,
                             height: '100%',
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
                         }}>
                             <MenuBook color="primary" fontSize="large" />
-                            <Typography variant="h6" fontWeight="bold" sx={{ color: '#023e74' }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
                                 Data Transparency
                             </Typography>
-                            <Typography sx={{ color: '#023e74' }}>
+                            <Typography variant="h6"sx={{ color: '#023e74', mb: -1.5 }}>
                                 Use default data inputs based on peer-reviewed source and authoritative population estimates.
                             </Typography>
                         </Paper>
                     </Grid>
 
-                    {/* 4. PDF Report Generation */}
+                    {/* 4. Real-time Calculations */}
                     <Grid item xs={12} sm={6} md={6}>
                         <Paper elevation={3} sx={{ 
-                            p: 3,
+                            p: 1,
                             height: '100%',
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
                         }}>
-                            <Download color="primary" fontSize="large" />
-                            <Typography variant="h6" fontWeight="bold" sx={{ color: '#023e74' }}>
-                                PDF Report Generation
+                            <Calculate color="primary" fontSize="large" />
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
+                                Real-time Calculations
                             </Typography>
-                            <Typography sx={{ color: '#023e74' }}>
-                                Download publication-ready reports for whatever use-case you need.
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: -1.5 }}>
+                                Instantly see how inclusion/exclusion criteria affect treatment demand for your population.
                             </Typography>
                         </Paper>
                     </Grid>
@@ -292,63 +377,59 @@ const LandingPage = () => {
             <Box sx={{ 
                 mb: 4,
                 px: { xs: 3, md: 12 }, 
-                py: 8, 
+                py: { xs: 4, md: 5 }, 
                 backgroundColor: '#023e74'
             }}>
                 <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ 
                     color: 'white',
                     textAlign: 'center',
-                    mb: 4
+                    mb: 3,
+                    fontSize: { xs: "2rem", sm: "2.25rem", md: "2.5rem" }
                 }}>
-                    Who Should Use The CEP Model?
+                    Who Should Use PATpath?
                 </Typography>
                 
-                <Grid container spacing={4}>
-                    <Grid item xs={12} md={6}>
+                <Grid container spacing={3} sx={{ alignItems: 'stretch' }}>
+                    <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
                         <Paper elevation={3} sx={{
-                            pt: 4, pr: 4, pl: 4, pb: 1,
+                            p: 1,
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
                         }}>
-                            <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ color: '#023e74' }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
                                 Healthcare Payers
                             </Typography>
-                            <Typography paragraph sx={{ fontSize: '1.1rem', color: '#023e74' }}>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: 0 }}>
                                 • Project potential patient populations for coverage planning.
                             </Typography>
-                            <Typography sx={{ fontSize: '1.1rem', color: '#023e74' }}>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: 0 }}>
                                 • Estimate regional treatment demand for resource allocation.
                             </Typography>
-                            <Box sx={{ height: 93 }} />
+                            <Box sx={{ flexGrow: 1 }} />
                         </Paper>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
                         <Paper elevation={3} sx={{ 
-                            pt: 4, pr: 4, pl: 4, pb: 4, 
+                            p: 1,
                             backgroundColor: 'white',
                             borderRadius: 2,
-                            transition: 'transform 0.2s',
-                            '&:hover': {
-                                transform: 'translateY(-4px)',
-                                boxShadow: 6
-                            }
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
                         }}>
-                            <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ color: '#023e74' }}>
+                            <Typography variant="h5" fontWeight="bold" sx={{ color: '#023e74' }}>
                                 Policymakers & Healthcare Systems
                             </Typography>
-                            <Typography paragraph sx={{ fontSize: '1.1rem', color: '#023e74' }}>
-                                • Assess potential needs for psilocybin-assisted therapy for depression.
-                            </Typography>
-                            <Typography paragraph sx={{ fontSize: '1.1rem', color: '#023e74' }}>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: 0 }}>
+                                • Assess potential needs for psilocybin-assisted therapy                           </Typography>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: 0 }}>
                                 • Plan resource allocation using region-specific insights.
                             </Typography>
-                            <Typography sx={{ fontSize: '1.1rem', color: '#023e74' }}>
+                            <Typography variant="h6" sx={{ color: '#023e74', mb: 0 }}>
                                 • Make data-driven treatment implementation decisions.
                             </Typography>
                         </Paper>
@@ -357,8 +438,9 @@ const LandingPage = () => {
 
                 <Box
                     sx={{
-                        mt: 6,
-                        p: 4,
+                        mt: 2,
+                        mb: -2,
+                        p: { xs: 2, md: 3 },
                         backgroundColor: 'white',
                         borderRadius: 2,
                         color: '#023e74',
@@ -369,12 +451,12 @@ const LandingPage = () => {
                         gap: 2
                     }}
                 >
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" fontWeight="bold">
                         Make evidence-based projections of the potential demand for
                         psilocybin assisted therapy.
                     </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: { xs: 3, md: 4 } }}>
                     <Button
                         variant="contained"
                         onClick={() => handleDevNotice('/register')}

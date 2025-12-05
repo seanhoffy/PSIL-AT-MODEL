@@ -4,19 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore";
-import { FormControl, MenuItem, InputLabel, Select, Box, Avatar, Button, Card, CardActions, CardContent, CardHeader, createTheme, Grid, TextField, ThemeProvider, CssBaseline } from "@mui/material";
+import { FormControl, MenuItem, InputLabel, Select, Box, Avatar, Button, Card, CardActions, CardContent, CardHeader, Grid, TextField } from "@mui/material";
 import SimpleNavBar from '../components/SimpleNavBar';
-
-const theme = createTheme({
-    palette: {
-        background: {
-            default: '#023e74',
-        },
-        primary: {
-            main: '#023e74',
-        },
-    },
-});
+import ThemeProvider from '../components/common/ThemeProvider';
+import { COLORS } from '../constants/colors';
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -24,6 +15,7 @@ function Register() {
     const [name, setName] = useState("");
     const [user_type, setUserType] = useState("");
     const [employer, setEmployer] = useState("");
+    const [affiliation, setAffiliation] = useState("");
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
@@ -33,7 +25,7 @@ function Register() {
     }, [loading, user, navigate]);
 
     const registerWithEmailAndPassword = async (name, email, password) => {
-        if (!name || !email || !password || !user_type || !employer) {
+        if (!name || !email || !password || !user_type || !employer || !affiliation) {
             alert("Please fill in all fields.");
             return;
         }
@@ -51,7 +43,8 @@ function Register() {
                 name: name,
                 user_type: user_type,
                 model: [],
-                employer: employer
+                employer: employer,
+                affiliation: affiliation.trim() || "Test", // default "Test" for now
             });
 
             console.log("User successfully registered:", user);
@@ -79,8 +72,7 @@ function Register() {
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <ThemeProvider>
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <SimpleNavBar />
                 <Grid
@@ -100,7 +92,7 @@ function Register() {
                             <CardHeader
                                 sx={{ mt: 3, marginBottom: -2 }}
                                 avatar={
-                                    <Avatar sx={{ mr: -1, bgcolor: '#023e74' }}>
+                                    <Avatar sx={{ mr: -1, bgcolor: COLORS.primary }}>
                                         <Box component="img"
                                             src="/cepLogo2.png"
                                             alt="CEP Logo"
@@ -158,6 +150,15 @@ function Register() {
                                 onChange={(event) => setEmployer(event.target.value)}
                                 label="Employer"
                                 value={employer}
+                                type={'text'}
+                                id="filled-basic"
+                            />
+                            <TextField fullWidth
+                                sx={{ mt: 1 }}
+                                onChange={(event) => setAffiliation(event.target.value)}
+                                label="Affiliation"
+                                value={affiliation}
+                                required
                                 type={'text'}
                                 id="filled-basic"
                             />

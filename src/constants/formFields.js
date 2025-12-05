@@ -1,0 +1,23 @@
+// String field names that should be treated as text inputs
+export const STRING_FIELD_NAMES = ['modelTitle', 'geographicArea', 'motivation', 'additionalComments'];
+
+// Exclusion criteria field definitions
+export const EXCLUSION_CRITERIA_FIELDS = [
+    ['manic_P', 'Psychotic or Manic Disorder'],
+    ['suicide_P', 'Suicide Attempt in the Past Year'],
+    ['diabetes_P', 'Diabetes (uncontrolled)'],
+    ['stroke_P', 'Stroke'],
+    ['heart_attack_P', 'Heart Attack in the last Year'],
+    ['blood_pressure_P', 'Treatement-Resistant Blood Pressure 140+/90+'],
+    ['epilepsy_P', 'Epilepsy'],
+    ['personality_P', 'Personality Disorder'],
+    ['hepatic_P', 'Hepatic Impairment'],
+];
+
+// Double counting adjustment fields
+export const DOUBLE_COUNTING_FIELDS = [
+    ['psycological_P', 'Psychological Problems (Manic, Suicide)'],
+    ['health_P', 'Health Conditions (Diabetes, Stroke, Heart Attack, BP+)'],
+    ['comorbid_hepatic_P', 'Lower Hepatic Impairment'],
+];
+

@@ -3,19 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Box, Card, CardHeader, CardContent, TextField, Button, CardActions, Avatar, Grid, createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import { Box, Card, CardHeader, CardContent, TextField, Button, CardActions, Avatar, Grid } from "@mui/material";
 import SimpleNavBar from '../components/SimpleNavBar';
-
-const theme = createTheme({
-    palette: {
-        background: {
-            default: '#023e74',
-        },
-        primary: {
-            main: '#023e74',
-        },
-    },
-});
+import ThemeProvider from '../components/common/ThemeProvider';
+import { COLORS } from '../constants/colors';
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -37,8 +28,7 @@ export default function LoginPage() {
     }, [loading, user, navigate]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <ThemeProvider>
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <SimpleNavBar />
                 <Grid
@@ -61,7 +51,7 @@ export default function LoginPage() {
                             <CardHeader
                                 sx={{ mt: 3, marginBottom: -2 }}
                                 avatar={
-                                    <Avatar sx={{ mr: -1, bgcolor: '#023e74' }}>
+                                    <Avatar sx={{ mr: -1, bgcolor: COLORS.primary }}>
                                         <Box component="img"
                                             src="/cepLogo2.png"
                                             alt="CEP Logo"

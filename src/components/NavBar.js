@@ -46,6 +46,7 @@ const NavBar = () => {
                 </ButtonBase>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                     <Button color="inherit" onClick={() => navigate("/researchpaper")} sx={{ color: '#000000' }}>ABOUT</Button>
+                    <Button color="inherit" onClick={() => navigate("/history")} sx={{ color: '#000000' }}>HISTORY</Button>
                     <Button color="inherit" onClick={handleLogout} sx={{ color: '#000000' }}>Logout</Button>
                 </Box>
             </Toolbar>
